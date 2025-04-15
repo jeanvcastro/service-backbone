@@ -5,6 +5,14 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
-    "skipLibCheck": true
-  }
+    "skipLibCheck": true,
+    "rootDir": ".",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"],
+      "$/*": ["../tests/*"]
+    }
+  },
+  "include": ["src/**/*.ts", "src/**/*.js", "tests/**/*.ts", "vitest.config.ts"],
+  "exclude": ["node_modules", "dist"]
 }

@@ -1,6 +1,9 @@
 import {
+  EntityNotFoundError,
   MissingRequiredPropertyError,
   TooManyPaymentAttemptsError,
+  UnableToCreateEntityError,
+  UnableToUpdateEntityError,
   ValueNegativeError,
   ValueTooHighError,
   ValueTooLowError
@@ -215,5 +218,17 @@ export class Sale extends BaseEntity {
     if (value > max) {
       throw new ValueTooHighError(value, max);
     }
+  }
+
+  public static notFoundError(): EntityNotFoundError {
+    return new EntityNotFoundError(this.name, "Sale not found");
+  }
+
+  public static unableToCreateError(): UnableToCreateEntityError {
+    return new UnableToCreateEntityError(this.name, "Sale not created");
+  }
+
+  public static unableToUpdateError(): UnableToUpdateEntityError {
+    return new UnableToUpdateEntityError(this.name, "Sale not updated");
   }
 }

@@ -1,4 +1,12 @@
-import { MissingRequiredPropertyError, ValueNegativeError, ValueTooHighError, ValueTooLowError } from "../errors";
+import {
+  EntityNotFoundError,
+  MissingRequiredPropertyError,
+  UnableToCreateEntityError,
+  UnableToUpdateEntityError,
+  ValueNegativeError,
+  ValueTooHighError,
+  ValueTooLowError
+} from "../errors";
 import { BaseEntity, type BaseEntityProps } from "./BaseEntity";
 
 export type ProductProps = BaseEntityProps & {
@@ -55,5 +63,17 @@ export class Product extends BaseEntity {
     if (value > max) {
       throw new ValueTooHighError(value, max);
     }
+  }
+
+  public static notFoundError(): EntityNotFoundError {
+    return new EntityNotFoundError(this.name, "Product not found");
+  }
+
+  public static unableToCreateError(): UnableToCreateEntityError {
+    return new UnableToCreateEntityError(this.name, "Product not created");
+  }
+
+  public static unableToUpdateError(): UnableToUpdateEntityError {
+    return new UnableToUpdateEntityError(this.name, "Product not updated");
   }
 }

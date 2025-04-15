@@ -1,3 +1,4 @@
+import { EntityNotFoundError, UnableToCreateEntityError, UnableToUpdateEntityError } from "../errors";
 import { UUID } from "../valueObjects/UUID";
 
 export interface BaseEntityProps {
@@ -56,5 +57,17 @@ export class BaseEntity {
 
   public set updatedAt(value: Date) {
     this._updatedAt = value;
+  }
+
+  public static notFoundError(): EntityNotFoundError {
+    return new EntityNotFoundError(this.name, "Entidade não encontrada");
+  }
+
+  public static unableToCreateError(): UnableToCreateEntityError {
+    return new UnableToCreateEntityError(this.name, "Entidade não foi criada");
+  }
+
+  public static unableToUpdateError(): UnableToUpdateEntityError {
+    return new UnableToUpdateEntityError(this.name, "Entidade não foi atualizada");
   }
 }

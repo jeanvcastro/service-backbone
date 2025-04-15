@@ -1,5 +1,5 @@
-import { makeProduct } from "tests/factories/makeProduct";
-import { makeSale } from "tests/factories/makeSale";
+import { makeProduct } from "$/factories/makeProduct";
+import { makeSale } from "$/factories/makeSale";
 import { describe, expect, it } from "vitest";
 import {
   MissingRequiredPropertyError,

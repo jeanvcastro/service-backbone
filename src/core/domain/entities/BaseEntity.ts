@@ -8,10 +8,12 @@ export interface BaseEntityProps {
   deletedAt?: Date | null;
 }
 
-type GenericProps = BaseEntityProps & Record<string | number | symbol, unknown>;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type GenericProps = BaseEntityProps & Record<string | number | symbol, any>;
 
 export class BaseEntity {
-  [key: string | number | symbol]: unknown;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  [key: string | number | symbol]: any;
   private _id: number = 0;
   private _uuid: UUID = new UUID();
   private _createdAt: Date = new Date();

@@ -5,7 +5,9 @@ import {
   ValueTooHighError,
   ValueTooLowError
 } from "../errors";
+import { ProductMapper } from "../mappers/ProductMapper";
 import { BaseEntity, BaseEntityProps } from "./BaseEntity";
+import { Product, ProductProps } from "./Product";
 
 export namespace SaleConstants {
   export enum Status {
@@ -35,7 +37,7 @@ export type SaleProps = BaseEntityProps & {
   barcode?: string | null;
   qrcode?: string | null;
   expiration?: Date | null;
-  // products?: ProductProps[];
+  products?: ProductProps[];
 };
 
 export class Sale extends BaseEntity {
@@ -53,7 +55,7 @@ export class Sale extends BaseEntity {
     this.barcode = props.barcode ?? null;
     this.qrcode = props.qrcode ?? null;
     this.expiration = props.expiration ?? null;
-    // this._products = props.products?.map(ProductMapper.toDomain) ?? [];
+    this.products = props.products?.map(ProductMapper.toDomain) ?? [];
   }
 
   get status(): SaleConstants.Status {
@@ -181,6 +183,14 @@ export class Sale extends BaseEntity {
     }
 
     this._expiration = value;
+  }
+
+  get products(): Product[] {
+    return this._products;
+  }
+
+  set products(value: Product[]) {
+    this._products = value;
   }
 
   private assertRequired(value: unknown, property: string): void {

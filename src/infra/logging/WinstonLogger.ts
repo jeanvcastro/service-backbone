@@ -24,12 +24,18 @@ export default class WinstonLogger implements Logger {
       format.timestamp({ format: "YYYY-MM-DD HH:mm:ss" }),
       format.errors({ stack: true }),
       format.printf(({ timestamp, level, message, ...meta }) => {
+        const upperLevel = level.toUpperCase();
         const metaData = Object.keys(meta).length ? meta : null;
+
+        if (typeof message === "string" && !metaData) {
+          return `[${timestamp}] ${upperLevel}: ${message}`;
+        }
+
         const jsonMeta = isLocal
           ? JSON.stringify({ message, ...metaData }, null, 2)
           : JSON.stringify({ message, ...metaData });
 
-        return `[${timestamp}] ${level.toUpperCase()}: ${jsonMeta}`;
+        return `[${timestamp}] ${upperLevel}: ${jsonMeta}`;
       }),
       ...(isLocal ? [format.colorize({ all: true })] : [])
     );

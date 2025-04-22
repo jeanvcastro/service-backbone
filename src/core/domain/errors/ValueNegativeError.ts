@@ -2,12 +2,12 @@ import { BaseError } from "./BaseError";
 
 export class ValueNegativeError extends BaseError {
   constructor() {
-    super(
-      "VALUE_NEGATIVE",
-      "Value cannot be negative.",
-      true,
-      400,
-      "A negative value was provided where only positive values are allowed."
-    );
+    super({
+      code: "VALUE_NEGATIVE",
+      message: "Value cannot be negative.",
+      isExpected: true,
+      httpCode: 400,
+      internalReason: "A negative value was provided where only positive values are allowed."
+    });
   }
 }

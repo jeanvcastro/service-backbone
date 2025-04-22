@@ -1,10 +1,13 @@
 import { BaseError } from "./BaseError";
 
 export class UnableToUpdateEntityError extends BaseError {
-  public readonly entity: string;
-
-  constructor(entity: string, message: string) {
-    super("UNABLE_TO_UPDATE_ENTITY", message, true, 500);
-    this.entity = entity;
+  constructor(message: string, entity?: string) {
+    super({
+      code: "UNABLE_TO_UPDATE_ENTITY",
+      message,
+      isExpected: true,
+      httpCode: 500,
+      internalReason: entity ? `Unable to update entity "${entity}".` : "Unable to update entity."
+    });
   }
 }

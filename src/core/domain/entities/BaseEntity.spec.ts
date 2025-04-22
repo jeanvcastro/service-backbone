@@ -30,20 +30,20 @@ describe("BaseEntity", () => {
     const error = BaseEntity.notFoundError();
     expect(error.code).toBe("ENTITY_NOT_FOUND");
     expect(error.isExpected).toBe(true);
-    expect(error.message).toBe("Entidade não encontrada");
+    expect(error.message).toBe("Entity not found");
   });
 
   it("should return an UnableToCreateEntityError from static method", () => {
     const error = BaseEntity.unableToCreateError();
     expect(error.code).toBe("UNABLE_TO_CREATE_ENTITY");
     expect(error.isExpected).toBe(true);
-    expect(error.message).toBe("Entidade não foi criada");
+    expect(error.message).toBe("Unable to create entity");
   });
 
   it("should return an UnableToUpdateEntityError from static method", () => {
     const error = BaseEntity.unableToUpdateError();
     expect(error.code).toBe("UNABLE_TO_UPDATE_ENTITY");
     expect(error.isExpected).toBe(true);
-    expect(error.message).toBe("Entidade não foi atualizada");
+    expect(error.message).toBe("Unable to update entity");
   });
 });

@@ -1,10 +1,13 @@
 import { BaseError } from "./BaseError";
 
 export class EntityNotFoundError extends BaseError {
-  public readonly entity: string;
-
-  constructor(entity: string, message: string) {
-    super("ENTITY_NOT_FOUND", message, true, 404);
-    this.entity = entity;
+  constructor(message: string, entity?: string) {
+    super({
+      code: "ENTITY_NOT_FOUND",
+      message,
+      isExpected: true,
+      httpCode: 404,
+      internalReason: entity ? `Entity "${entity}" not found.` : "Entity not found."
+    });
   }
 }

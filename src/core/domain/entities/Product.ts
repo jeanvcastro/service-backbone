@@ -66,14 +66,14 @@ export class Product extends BaseEntity {
   }
 
   public static notFoundError(): EntityNotFoundError {
-    return new EntityNotFoundError(this.name, "Product not found");
+    return new EntityNotFoundError("Product not found");
   }
 
   public static unableToCreateError(): UnableToCreateEntityError {
-    return new UnableToCreateEntityError(this.name, "Product not created");
+    return new UnableToCreateEntityError("Product not created");
   }
 
   public static unableToUpdateError(): UnableToUpdateEntityError {
-    return new UnableToUpdateEntityError(this.name, "Product not updated");
+    return new UnableToUpdateEntityError("Product not updated");
   }
 }

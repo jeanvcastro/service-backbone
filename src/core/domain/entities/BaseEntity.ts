@@ -60,14 +60,14 @@ export class BaseEntity {
   }
 
   public static notFoundError(): EntityNotFoundError {
-    return new EntityNotFoundError(this.name, "Entidade não encontrada");
+    return new EntityNotFoundError("Entity not found");
   }
 
   public static unableToCreateError(): UnableToCreateEntityError {
-    return new UnableToCreateEntityError(this.name, "Entidade não foi criada");
+    return new UnableToCreateEntityError("Unable to create entity");
   }
 
   public static unableToUpdateError(): UnableToUpdateEntityError {
-    return new UnableToUpdateEntityError(this.name, "Entidade não foi atualizada");
+    return new UnableToUpdateEntityError("Unable to update entity");
   }
 }

@@ -1,15 +1,10 @@
 import { build } from "esbuild";
 import { rmSync } from "fs";
-import { glob } from "glob";
 
 rmSync("dist", { recursive: true, force: true });
 
-const entryPoints = await glob("src/**/*.ts", {
-  ignore: ["**/*.spec.ts", "**/*.test.ts"]
-});
-
 build({
-  entryPoints,
+  entryPoints: ["src/infra/http/express/app.ts"],
   outdir: "dist",
   platform: "node",
   target: "node22",

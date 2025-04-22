@@ -6,9 +6,11 @@
   "engines": {
     "node": "22.x"
   },
+  "type": "module",
   "scripts": {
     "dev": "tsx watch src/infra/http/express/app.ts",
     "build": "node esbuild.config.mjs",
+    "start": "node dist/app.js",
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --ext .ts --fix",
     "format": "prettier --write .",

@@ -22,3 +22,9 @@ build({
   entryPoints: ["src/infra/cli/app.ts"],
   outdir: "dist/cli"
 });
+
+build({
+  ...commonOptions,
+  entryPoints: ["src/infra/schedule/app.ts"],
+  outdir: "dist/schedule"
+});

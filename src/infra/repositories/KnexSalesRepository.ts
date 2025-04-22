@@ -3,15 +3,18 @@ import { SaleMapper } from "@/core/domain/mappers/SaleMapper";
 import { SalesRepository } from "@/core/domain/repositories";
 import { Knex } from "knex";
 import { objectToSnake } from "ts-case-convert";
+import { KnexTransactionContext } from "../db/KnexUnitOfWork";
 
 export default class KnexSalesRepository implements SalesRepository {
-  constructor(private readonly knex: Knex) {}
+  constructor(private readonly knexInstance: Knex) {}
 
-  async create(sale: Sale, products: Product[]): Promise<boolean> {
+  async create(sale: Sale, products: Product[], transactionContext?: KnexTransactionContext): Promise<boolean> {
+    const databaseExecutor = transactionContext?.transaction ?? this.knexInstance;
+
     const data = SaleMapper.toPersistence(sale);
     const normalizedData = objectToSnake(data);
 
-    return this.knex.transaction(async transaction => {
+    return databaseExecutor.transaction(async transaction => {
       const [created] = await transaction("sales").insert(normalizedData).returning("id");
 
       const saleProducts = products.map(product => ({

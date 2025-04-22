@@ -2,7 +2,9 @@ import { DIContainer } from "@/core/DIContainer";
 import { ProductsRepository, SalesRepository } from "@/core/domain/repositories";
 import { ErrorHandler } from "@/core/ErrorHandler";
 import Logger from "@/core/Logger";
+import { TransactionContext, UnitOfWork } from "@/core/UnityOfWork";
 import { connection } from "@/infra/db/knex/connection";
+import { KnexUnitOfWork } from "@/infra/db/KnexUnitOfWork";
 import { ExpressErrorHandler } from "@/infra/http/express/ExpressErrorHandler";
 import WinstonLogger from "@/infra/logging/WinstonLogger";
 import KnexProductsRepository from "@/infra/repositories/KnexProductsRepository";
@@ -13,6 +15,7 @@ import { CreateSaleUseCase } from "./CreateSaleUseCase";
 export function configureDI() {
   const container = new DIContainer<{
     dbConnection: typeof connection;
+    UnitOfWork: UnitOfWork<TransactionContext>;
 
     ProductsRepository: ProductsRepository;
     SalesRepository: SalesRepository;
@@ -27,6 +30,7 @@ export function configureDI() {
 
   // database
   container.add("dbConnection", () => connection);
+  container.add("UnitOfWork", ({ dbConnection }) => new KnexUnitOfWork(dbConnection));
 
   // repositories
   container.add("ProductsRepository", ({ dbConnection }) => new KnexProductsRepository(dbConnection));
@@ -39,7 +43,8 @@ export function configureDI() {
   // use cases
   container.add(
     "CreateSaleUseCase",
-    ({ ProductsRepository, SalesRepository }) => new CreateSaleUseCase(ProductsRepository, SalesRepository)
+    ({ ProductsRepository, SalesRepository, UnitOfWork }) =>
+      new CreateSaleUseCase(ProductsRepository, SalesRepository, UnitOfWork)
   );
 
   // controllers

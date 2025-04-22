@@ -26,7 +26,7 @@ describe("CreateSaleUseCase", () => {
       gatewayTransactionId: "any-tx-id",
       qrcode: "any-qrcode",
       expiration: new Date(),
-      products: [product.uuid.toString()]
+      products: [product.uuid]
     };
 
     const output = await sut.execute(input);

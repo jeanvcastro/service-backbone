@@ -14,4 +14,8 @@ export default class KnexProductsRepository implements ProductsRepository {
 
     return data.map(item => ProductMapper.toDomain(item));
   }
+
+  async incrementSalesCount(uuid: string, by = 1): Promise<void> {
+    await this.knex("products").where({ uuid }).increment("sales_count", by);
+  }
 }

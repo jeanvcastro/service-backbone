@@ -35,8 +35,12 @@ export class CreateSaleUseCase {
 
     await this.salesRepository.create(sale, products);
 
+    for (const product of products) {
+      await this.productsRepository.incrementSalesCount(product.uuid);
+    }
+
     return {
-      uuid: sale.uuid.toString()
+      uuid: sale.uuid
     };
   }
 }

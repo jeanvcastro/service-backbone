@@ -7,7 +7,7 @@ export class SaleMapper {
 
   static toPersistence(sale: Sale): SaleProps {
     return {
-      uuid: sale.uuid.toString(),
+      uuid: sale.uuid,
       createdAt: sale.createdAt,
       updatedAt: sale.updatedAt,
       status: sale.status,

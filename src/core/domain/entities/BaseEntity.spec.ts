@@ -5,7 +5,7 @@ import { BaseEntity } from "./BaseEntity";
 describe("BaseEntity", () => {
   it("should create an instance with default values", () => {
     const entity = new BaseEntity();
-    expect(entity.uuid).toBeInstanceOf(UUID);
+    expect(entity.uuid).toBeTypeOf("string");
     expect(entity.createdAt).toBeInstanceOf(Date);
     expect(entity.updatedAt).toBeInstanceOf(Date);
   });
@@ -21,7 +21,7 @@ describe("BaseEntity", () => {
       updatedAt
     });
 
-    expect(entity.uuid.toString()).toBe(uuid.toString());
+    expect(entity.uuid).toBe(uuid.toString());
     expect(entity.createdAt).toEqual(createdAt);
     expect(entity.updatedAt).toEqual(updatedAt);
   });

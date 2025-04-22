@@ -2,5 +2,6 @@ import { ProductsRepository } from "@/core/domain/repositories/ProductsRepositor
 import { vi } from "vitest";
 
 export const mockedProductsRepository: ProductsRepository = {
-  findMany: vi.fn()
+  findMany: vi.fn(),
+  incrementSalesCount: vi.fn()
 };

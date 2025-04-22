@@ -7,7 +7,7 @@ export class ProductMapper {
 
   static toPersistence(product: Product): ProductProps {
     return {
-      uuid: product.uuid.toString(),
+      uuid: product.uuid,
       name: product.name,
       price: product.price,
       createdAt: product.createdAt,

@@ -35,8 +35,8 @@ export class BaseEntity {
     this._id = value;
   }
 
-  public get uuid(): UUID {
-    return this._uuid;
+  public get uuid(): string {
+    return this._uuid.toString();
   }
 
   public set uuid(value: string) {

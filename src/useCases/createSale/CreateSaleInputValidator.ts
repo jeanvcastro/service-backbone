@@ -1,7 +1,7 @@
 import { SaleConstants } from "@/core/domain/entities/Sale";
 import { z } from "zod";
 
-export const createSaleSchema = z.object({
+export const CreateSaleInputValidator = z.object({
   status: z.nativeEnum(SaleConstants.Status),
   paymentMethod: z.nativeEnum(SaleConstants.PaymentMethod),
   value: z.number().min(500).max(500_000),

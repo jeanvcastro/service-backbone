@@ -7,12 +7,12 @@ import { CreateSaleOutput } from "./CreateSaleOutput";
 
 export class CreateSaleUseCase {
   constructor(
-    private readonly productRepository: ProductsRepository,
-    private readonly saleRepository: SalesRepository
+    private readonly productsRepository: ProductsRepository,
+    private readonly salesRepository: SalesRepository
   ) {}
 
   async execute(input: CreateSaleInput): Promise<CreateSaleOutput> {
-    const products = await this.productRepository.findMany(input.products);
+    const products = await this.productsRepository.findMany(input.products);
 
     if (products.length !== input.products?.length) {
       throw Product.notFoundError();
@@ -33,7 +33,7 @@ export class CreateSaleUseCase {
       expiration: input.expiration ?? null
     });
 
-    await this.saleRepository.create(sale);
+    await this.salesRepository.create(sale);
 
     return {
       uuid: sale.uuid.toString()

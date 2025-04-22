@@ -33,7 +33,7 @@ export class CreateSaleUseCase {
       expiration: input.expiration ?? null
     });
 
-    await this.salesRepository.create(sale);
+    await this.salesRepository.create(sale, products);
 
     return {
       uuid: sale.uuid.toString()

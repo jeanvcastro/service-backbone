@@ -1,5 +1,5 @@
-import { Sale } from "../entities/Sale";
+import { Product, Sale } from "../entities";
 
 export interface SalesRepository {
-  create(sale: Sale): Promise<boolean>;
+  create(sale: Sale, products: Product[]): Promise<boolean>;
 }

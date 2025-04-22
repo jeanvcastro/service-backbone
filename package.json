@@ -7,17 +7,27 @@
     "node": "22.x"
   },
   "scripts": {
+    "dev": "tsx watch src/infra/http/express/app.ts",
     "build": "node esbuild.config.mjs",
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --ext .ts --fix",
     "format": "prettier --write .",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
+    "knex": "tsx --env-file=.env ./node_modules/knex/bin/cli.js --knexfile src/infra/db/knex/knexfile.ts",
+    "db:make:migration": "pnpm knex migrate:make",
+    "db:make:seed": "pnpm knex seed:make",
+    "db:migrate": "pnpm knex migrate:latest",
+    "db:seed": "pnpm knex seed:run",
+    "db:status": "pnpm knex migrate:status",
     "prepare": "husky"
   },
   "devDependencies": {
     "@eslint/js": "^9.24.0",
     "@faker-js/faker": "^9.7.0",
+    "@types/compression": "^1.7.5",
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.1",
     "@types/node": "^22.14.1",
     "esbuild": "^0.25.2",
     "eslint": "^9.24.0",
@@ -27,11 +37,21 @@
     "husky": "^9.1.7",
     "lint-staged": "^15.5.1",
     "prettier": "^3.5.3",
+    "tsx": "^4.19.3",
     "typescript": "^5.8.3",
     "typescript-eslint": "^8.29.1",
     "vitest": "^3.1.1"
   },
   "dependencies": {
+    "compression": "^1.8.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "helmet": "^8.1.0",
+    "knex": "^3.1.0",
+    "pg": "^8.14.1",
+    "ts-case-convert": "^2.1.0",
+    "winston": "^3.17.0",
     "zod": "^3.24.2"
   }
 }

@@ -1,6 +1,6 @@
 import { BaseError } from "@/core/domain/errors";
 import Logger from "@/core/Logger";
-import { isLocal } from "@/shared/env";
+import { isDevelopment } from "@/shared/env";
 import winston, { format, transports, type transport } from "winston";
 import { ZodError } from "zod";
 
@@ -31,13 +31,13 @@ export default class WinstonLogger implements Logger {
           return `[${timestamp}] ${upperLevel}: ${message}`;
         }
 
-        const jsonMeta = isLocal
+        const jsonMeta = isDevelopment
           ? JSON.stringify({ message, ...metaData }, null, 2)
           : JSON.stringify({ message, ...metaData });
 
         return `[${timestamp}] ${upperLevel}: ${jsonMeta}`;
       }),
-      ...(isLocal ? [format.colorize({ all: true })] : [])
+      ...(isDevelopment ? [format.colorize({ all: true })] : [])
     );
 
     const loggerTransports: transport[] = [
@@ -55,7 +55,7 @@ export default class WinstonLogger implements Logger {
 
   private winstonLogMap(data: unknown, level: string = "info") {
     const formatStack = (stack?: string) =>
-      !isLocal && stack ? stack.split("\n").map(line => line.trim()) : undefined;
+      !isDevelopment && stack ? stack.split("\n").map(line => line.trim()) : undefined;
 
     if (data instanceof BaseError) {
       const { code, message, isExpected, httpCode, internalReason, context, stack } = data;

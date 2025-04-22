@@ -1,7 +1,7 @@
 import { BaseError } from "@/core/domain/errors";
 import { ErrorHandler, ErrorResponse } from "@/core/ErrorHandler";
 import Logger from "@/core/Logger";
-import { isLocal } from "@/shared/env";
+import { isDevelopment } from "@/shared/env";
 import { type Response } from "express";
 import { ZodError } from "zod";
 
@@ -24,7 +24,7 @@ export class ExpressErrorHandler implements ErrorHandler {
       isTrustedError = error.isExpected;
     }
 
-    if (isLocal) {
+    if (isDevelopment) {
       return this.handleDevelopmentError(response, error, httpCode);
     }
 

@@ -13,7 +13,7 @@ envSchema.parse(process.env);
 
 const NODE_ENV = (process.env.NODE_ENV ?? "development").toLowerCase();
 
-export const isLocal = NODE_ENV === "development";
+export const isDevelopment = NODE_ENV === "development";
 export const isTest = NODE_ENV === "test";
 export const isStaging = NODE_ENV === "staging";
 export const isProduction = NODE_ENV === "production";

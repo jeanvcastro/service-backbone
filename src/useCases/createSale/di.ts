@@ -1,14 +1,16 @@
 import { DIContainer } from "@/core/DIContainer";
 import { ProductsRepository, SalesRepository } from "@/core/domain/repositories";
+import { CustomersRepository } from "@/core/domain/repositories/CustomersRepository";
 import { ErrorHandler } from "@/core/ErrorHandler";
 import Logger from "@/core/Logger";
 import { TransactionContext, UnitOfWork } from "@/core/UnityOfWork";
 import { connection } from "@/infra/db/knex/connection";
-import { KnexUnitOfWork } from "@/infra/db/KnexUnitOfWork";
+import { KnexUnitOfWork } from "@/infra/db/knex/KnexUnitOfWork";
 import { ExpressErrorHandler } from "@/infra/http/express/ExpressErrorHandler";
 import WinstonLogger from "@/infra/logging/WinstonLogger";
-import KnexProductsRepository from "@/infra/repositories/KnexProductsRepository";
-import KnexSalesRepository from "@/infra/repositories/KnexSalesRepository";
+import KnexCustomersRepository from "@/infra/repositories/knex/KnexCustomersRepository";
+import KnexProductsRepository from "@/infra/repositories/knex/KnexProductsRepository";
+import KnexSalesRepository from "@/infra/repositories/knex/KnexSalesRepository";
 import { CreateSaleController } from "./CreateSaleController";
 import { CreateSaleUseCase } from "./CreateSaleUseCase";
 
@@ -17,6 +19,7 @@ export function configureDI() {
     dbConnection: typeof connection;
     UnitOfWork: UnitOfWork<TransactionContext>;
 
+    CustomersRepository: CustomersRepository;
     ProductsRepository: ProductsRepository;
     SalesRepository: SalesRepository;
 
@@ -33,6 +36,7 @@ export function configureDI() {
   container.add("UnitOfWork", ({ dbConnection }) => new KnexUnitOfWork(dbConnection));
 
   // repositories
+  container.add("CustomersRepository", ({ dbConnection }) => new KnexCustomersRepository(dbConnection));
   container.add("ProductsRepository", ({ dbConnection }) => new KnexProductsRepository(dbConnection));
   container.add("SalesRepository", ({ dbConnection }) => new KnexSalesRepository(dbConnection));
 
@@ -43,8 +47,8 @@ export function configureDI() {
   // use cases
   container.add(
     "CreateSaleUseCase",
-    ({ ProductsRepository, SalesRepository, UnitOfWork }) =>
-      new CreateSaleUseCase(ProductsRepository, SalesRepository, UnitOfWork)
+    ({ CustomersRepository, ProductsRepository, SalesRepository, UnitOfWork }) =>
+      new CreateSaleUseCase(CustomersRepository, ProductsRepository, SalesRepository, UnitOfWork)
   );
 
   // controllers

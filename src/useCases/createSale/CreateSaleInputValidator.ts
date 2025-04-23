@@ -2,6 +2,9 @@ import { SaleConstants } from "@/core/domain/entities/Sale";
 import { z } from "zod";
 
 export const CreateSaleInputValidator = z.object({
+  customerUuid: z.string().uuid(),
+  productUuids: z.array(z.string().uuid()).min(1),
+
   status: z.nativeEnum(SaleConstants.Status),
   paymentMethod: z.nativeEnum(SaleConstants.PaymentMethod),
   value: z.number().min(500).max(500_000),
@@ -14,7 +17,5 @@ export const CreateSaleInputValidator = z.object({
   digitableLine: z.string().min(1).nullable().optional(),
   barcode: z.string().min(1).nullable().optional(),
   qrcode: z.string().min(1).nullable().optional(),
-  expiration: z.date().nullable().optional(),
-
-  products: z.array(z.string().uuid()).min(1)
+  expiration: z.date().nullable().optional()
 });

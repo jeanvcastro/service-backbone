@@ -11,6 +11,7 @@ export const makeSale = ({ ...override }: Partial<SaleProps> = {}): Sale => {
     id: faker.number.int(),
     uuid: faker.string.uuid(),
 
+    customerId: faker.number.int(),
     status: SaleConstants.Status.APPROVED,
     paymentMethod: SaleConstants.PaymentMethod.CREDIT_CARD,
     value,

@@ -3,7 +3,7 @@ import { ProductMapper } from "@/core/domain/mappers/ProductMapper";
 import { ProductsRepository } from "@/core/domain/repositories/ProductsRepository";
 import { Knex } from "knex";
 import { objectToSnake } from "ts-case-convert";
-import { KnexTransactionContext } from "../db/KnexUnitOfWork";
+import { KnexTransactionContext } from "../../db/knex/KnexUnitOfWork";
 
 export default class KnexProductsRepository implements ProductsRepository {
   constructor(private readonly knexInstance: Knex) {}

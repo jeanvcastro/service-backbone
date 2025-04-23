@@ -4,15 +4,23 @@ export async function seed(knex: Knex): Promise<void> {
   await knex("sale_products").del();
   await knex("sales").del();
   await knex("products").del();
+  await knex("customers").del();
 
+  const CUSTOMER_UUID = "f2b8c0d4-5a3e-4b1c-9f7d-6a0e1f2b3c4d";
   const PRODUCT_1_UUID = "2ef04166-c309-4dab-935a-766a27340f09";
   const PRODUCT_2_UUID = "5a0739b5-099e-4bd1-85c4-cc69a6068cb9";
   const SALE_UUID = "52491141-8728-483a-bf1c-1a33d56c34b9";
 
+  await knex("customers").insert({
+    uuid: CUSTOMER_UUID,
+    name: "Customer 1",
+    email: "customer@email.com"
+  });
+
   const [product1, product2] = await knex("products")
     .insert([
-      { uuid: PRODUCT_1_UUID, name: "Product 1", price: 10000 },
-      { uuid: PRODUCT_2_UUID, name: "Product 2", price: 5000 }
+      { uuid: PRODUCT_1_UUID, name: "Product 1", price: 10000 },
+      { uuid: PRODUCT_2_UUID, name: "Product 2", price: 5000 }
     ])
     .returning(["id", "price"]);
 

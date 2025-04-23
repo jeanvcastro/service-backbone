@@ -8,8 +8,10 @@ import {
   ValueTooHighError,
   ValueTooLowError
 } from "../errors";
+import { CustomerMapper } from "../mappers/CustomerMapper";
 import { ProductMapper } from "../mappers/ProductMapper";
 import { BaseEntity, BaseEntityProps } from "./BaseEntity";
+import { Customer, CustomerProps } from "./Customer";
 import { Product, ProductProps } from "./Product";
 
 export namespace SaleConstants {
@@ -28,6 +30,7 @@ export namespace SaleConstants {
 }
 
 export type SaleProps = BaseEntityProps & {
+  customerId: number;
   status: SaleConstants.Status;
   paymentMethod: SaleConstants.PaymentMethod;
   value: number;
@@ -40,12 +43,14 @@ export type SaleProps = BaseEntityProps & {
   barcode?: string | null;
   qrcode?: string | null;
   expiration?: Date | null;
+  customer?: CustomerProps;
   products?: ProductProps[];
 };
 
 export class Sale extends BaseEntity {
   constructor(props: SaleProps) {
     super(props);
+    this.customerId = props.customerId;
     this.status = props.status;
     this.paymentMethod = props.paymentMethod;
     this.value = props.value;
@@ -58,6 +63,7 @@ export class Sale extends BaseEntity {
     this.barcode = props.barcode ?? null;
     this.qrcode = props.qrcode ?? null;
     this.expiration = props.expiration ?? null;
+    this.customer = props.customer ? CustomerMapper.toDomain(props.customer) : null;
     this.products = props.products?.map(ProductMapper.toDomain) ?? [];
   }
 
@@ -186,6 +192,14 @@ export class Sale extends BaseEntity {
     }
 
     this._expiration = value;
+  }
+
+  get customer(): Customer | null {
+    return this._customer;
+  }
+
+  set customer(value: Customer | null) {
+    this._customer = value;
   }
 
   get products(): Product[] {

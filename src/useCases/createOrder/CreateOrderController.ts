@@ -1,13 +1,13 @@
 import { BaseController } from "@/infra/http/express/BaseController";
-import { CreateSaleUseCase } from "./CreateSaleUseCase";
+import { CreateOrderUseCase } from "./CreateOrderUseCase";
 
 import { ErrorHandler } from "@/core/ErrorHandler";
 import { Request, Response } from "express";
-import { CreateSaleInputValidator } from "./CreateSaleInputValidator";
+import { CreateOrderInputValidator } from "./CreateOrderInputValidator";
 
-export class CreateSaleController extends BaseController {
+export class CreateOrderController extends BaseController {
   constructor(
-    private readonly useCase: CreateSaleUseCase,
+    private readonly useCase: CreateOrderUseCase,
     errorHandler: ErrorHandler
   ) {
     super(errorHandler);
@@ -17,7 +17,7 @@ export class CreateSaleController extends BaseController {
     try {
       const data = request.body;
 
-      CreateSaleInputValidator.parse(data);
+      CreateOrderInputValidator.parse(data);
 
       const result = await this.useCase.execute(data);
 

@@ -1,2 +1,2 @@
+export * from "./OrdersRepository";
 export * from "./ProductsRepository";
-export * from "./SalesRepository";

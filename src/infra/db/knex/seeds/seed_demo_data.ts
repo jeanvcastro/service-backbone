@@ -1,15 +1,15 @@
 import { Knex } from "knex";
 
 export async function seed(knex: Knex): Promise<void> {
-  await knex("sale_products").del();
-  await knex("sales").del();
+  await knex("order_products").del();
+  await knex("orders").del();
   await knex("products").del();
   await knex("customers").del();
 
   const CUSTOMER_UUID = "f2b8c0d4-5a3e-4b1c-9f7d-6a0e1f2b3c4d";
   const PRODUCT_1_UUID = "2ef04166-c309-4dab-935a-766a27340f09";
   const PRODUCT_2_UUID = "5a0739b5-099e-4bd1-85c4-cc69a6068cb9";
-  const SALE_UUID = "52491141-8728-483a-bf1c-1a33d56c34b9";
+  const ORDER_UUID = "52491141-8728-483a-bf1c-1a33d56c34b9";
 
   await knex("customers").insert({
     uuid: CUSTOMER_UUID,
@@ -24,9 +24,9 @@ export async function seed(knex: Knex): Promise<void> {
     ])
     .returning(["id", "price"]);
 
-  const [{ id: saleId }] = await knex("sales")
+  const [{ id: orderId }] = await knex("orders")
     .insert({
-      uuid: SALE_UUID,
+      uuid: ORDER_UUID,
       status: "APPROVED",
       payment_method: "CREDIT_CARD",
       value: 15000,
@@ -38,15 +38,15 @@ export async function seed(knex: Knex): Promise<void> {
     })
     .returning("id");
 
-  await knex("sale_products").insert([
+  await knex("order_products").insert([
     {
-      sale_id: saleId,
+      order_id: orderId,
       product_id: product1.id,
       quantity: 1,
       price: product1.price
     },
     {
-      sale_id: saleId,
+      order_id: orderId,
       product_id: product2.id,
       quantity: 1,
       price: product2.price

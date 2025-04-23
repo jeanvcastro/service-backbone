@@ -14,7 +14,7 @@ import { BaseEntity, BaseEntityProps } from "./BaseEntity";
 import { Customer, CustomerProps } from "./Customer";
 import { Product, ProductProps } from "./Product";
 
-export namespace SaleConstants {
+export namespace OrderConstants {
   export enum Status {
     INITIATED = "INITIATED",
     APPROVED = "APPROVED",
@@ -29,10 +29,10 @@ export namespace SaleConstants {
   }
 }
 
-export type SaleProps = BaseEntityProps & {
+export type OrderProps = BaseEntityProps & {
   customerId: number;
-  status: SaleConstants.Status;
-  paymentMethod: SaleConstants.PaymentMethod;
+  status: OrderConstants.Status;
+  paymentMethod: OrderConstants.PaymentMethod;
   value: number;
   attempts: number;
   gatewayTransactionId: string;
@@ -47,8 +47,8 @@ export type SaleProps = BaseEntityProps & {
   products?: ProductProps[];
 };
 
-export class Sale extends BaseEntity {
-  constructor(props: SaleProps) {
+export class Order extends BaseEntity {
+  constructor(props: OrderProps) {
     super(props);
     this.customerId = props.customerId;
     this.status = props.status;
@@ -67,19 +67,19 @@ export class Sale extends BaseEntity {
     this.products = props.products?.map(ProductMapper.toDomain) ?? [];
   }
 
-  get status(): SaleConstants.Status {
+  get status(): OrderConstants.Status {
     return this._status;
   }
 
-  set status(value: SaleConstants.Status) {
+  set status(value: OrderConstants.Status) {
     this._status = value;
   }
 
-  get paymentMethod(): SaleConstants.PaymentMethod {
+  get paymentMethod(): OrderConstants.PaymentMethod {
     return this._paymentMethod;
   }
 
-  set paymentMethod(value: SaleConstants.PaymentMethod) {
+  set paymentMethod(value: OrderConstants.PaymentMethod) {
     this._paymentMethod = value;
   }
 
@@ -118,7 +118,7 @@ export class Sale extends BaseEntity {
   }
 
   set creditCardBrand(value: string | null) {
-    if (this._paymentMethod === SaleConstants.PaymentMethod.CREDIT_CARD) {
+    if (this._paymentMethod === OrderConstants.PaymentMethod.CREDIT_CARD) {
       this.assertRequired(value, "creditCardBrand");
     }
     this._creditCardBrand = value;
@@ -129,7 +129,7 @@ export class Sale extends BaseEntity {
   }
 
   set installments(value: number | null) {
-    if (this._paymentMethod === SaleConstants.PaymentMethod.CREDIT_CARD) {
+    if (this._paymentMethod === OrderConstants.PaymentMethod.CREDIT_CARD) {
       this.assertRequired(value, "installments");
     }
     this._installments = value;
@@ -140,7 +140,7 @@ export class Sale extends BaseEntity {
   }
 
   set installmentsValue(value: number | null) {
-    if (this._paymentMethod === SaleConstants.PaymentMethod.CREDIT_CARD) {
+    if (this._paymentMethod === OrderConstants.PaymentMethod.CREDIT_CARD) {
       this.assertRequired(value, "installmentsValue");
     }
     this._installmentsValue = value;
@@ -151,7 +151,7 @@ export class Sale extends BaseEntity {
   }
 
   set digitableLine(value: string | null) {
-    if (this._paymentMethod === SaleConstants.PaymentMethod.BANK_SLIP) {
+    if (this._paymentMethod === OrderConstants.PaymentMethod.BANK_SLIP) {
       this.assertRequired(value, "digitableLine");
     }
     this._digitableLine = value;
@@ -162,7 +162,7 @@ export class Sale extends BaseEntity {
   }
 
   set barcode(value: string | null) {
-    if (this._paymentMethod === SaleConstants.PaymentMethod.BANK_SLIP) {
+    if (this._paymentMethod === OrderConstants.PaymentMethod.BANK_SLIP) {
       this.assertRequired(value, "barcode");
     }
     this._barcode = value;
@@ -173,7 +173,7 @@ export class Sale extends BaseEntity {
   }
 
   set qrcode(value: string | null) {
-    if (this._paymentMethod === SaleConstants.PaymentMethod.PIX) {
+    if (this._paymentMethod === OrderConstants.PaymentMethod.PIX) {
       this.assertRequired(value, "qrcode");
     }
     this._qrcode = value;
@@ -185,7 +185,7 @@ export class Sale extends BaseEntity {
 
   set expiration(value: Date | null) {
     const needsExpiration =
-      this._paymentMethod !== SaleConstants.PaymentMethod.CREDIT_CARD && this.status !== SaleConstants.Status.REFUSED;
+      this._paymentMethod !== OrderConstants.PaymentMethod.CREDIT_CARD && this.status !== OrderConstants.Status.REFUSED;
 
     if (needsExpiration) {
       this.assertRequired(value, "expiration");
@@ -212,7 +212,7 @@ export class Sale extends BaseEntity {
 
   private assertRequired(value: unknown, property: string): void {
     if (value === undefined || value === null || value === "") {
-      throw new MissingRequiredPropertyError("Sale", property);
+      throw new MissingRequiredPropertyError("Order", property);
     }
   }
 
@@ -235,14 +235,14 @@ export class Sale extends BaseEntity {
   }
 
   public static notFoundError(): EntityNotFoundError {
-    return new EntityNotFoundError("Sale not found");
+    return new EntityNotFoundError("Order not found");
   }
 
   public static unableToCreateError(): UnableToCreateEntityError {
-    return new UnableToCreateEntityError("Sale not created");
+    return new UnableToCreateEntityError("Order not created");
   }
 
   public static unableToUpdateError(): UnableToUpdateEntityError {
-    return new UnableToUpdateEntityError("Sale not updated");
+    return new UnableToUpdateEntityError("Order not updated");
   }
 }

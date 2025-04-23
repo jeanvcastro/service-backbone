@@ -40,9 +40,9 @@ export default class KnexProductsRepository implements ProductsRepository {
     return data.map(item => ProductMapper.toDomain(item));
   }
 
-  async incrementSalesCount(uuid: string, transactionContext?: KnexTransactionContext, by = 1): Promise<void> {
+  async incrementOrdersCount(uuid: string, transactionContext?: KnexTransactionContext, by = 1): Promise<void> {
     const databaseExecutor = transactionContext?.transaction ?? this.knexInstance;
 
-    await databaseExecutor("products").where({ uuid }).increment("sales_count", by);
+    await databaseExecutor("products").where({ uuid }).increment("orders_count", by);
   }
 }

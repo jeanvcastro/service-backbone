@@ -1,22 +1,22 @@
 import { Customer } from "@/core/domain/entities/Customer";
+import { Order } from "@/core/domain/entities/Order";
 import { Product } from "@/core/domain/entities/Product";
-import { Sale } from "@/core/domain/entities/Sale";
 import { CustomersRepository } from "@/core/domain/repositories/CustomersRepository";
+import { OrdersRepository } from "@/core/domain/repositories/OrdersRepository";
 import { ProductsRepository } from "@/core/domain/repositories/ProductsRepository";
-import { SalesRepository } from "@/core/domain/repositories/SalesRepository";
 import { TransactionContext, UnitOfWork } from "@/core/UnityOfWork";
-import { CreateSaleInput } from "./CreateSaleInput";
-import { CreateSaleOutput } from "./CreateSaleOutput";
+import { CreateOrderInput } from "./CreateOrderInput";
+import { CreateOrderOutput } from "./CreateOrderOutput";
 
-export class CreateSaleUseCase {
+export class CreateOrderUseCase {
   constructor(
     private readonly customersRepository: CustomersRepository,
     private readonly productsRepository: ProductsRepository,
-    private readonly salesRepository: SalesRepository,
+    private readonly ordersRepository: OrdersRepository,
     private readonly unityOfWork: UnitOfWork<TransactionContext>
   ) {}
 
-  async execute(input: CreateSaleInput): Promise<CreateSaleOutput> {
+  async execute(input: CreateOrderInput): Promise<CreateOrderOutput> {
     const customer = await this.customersRepository.findOne(input.customerUuid);
     if (!customer) {
       throw Customer.notFoundError();
@@ -28,7 +28,7 @@ export class CreateSaleUseCase {
       throw Product.notFoundError();
     }
 
-    const sale = new Sale({
+    const order = new Order({
       customerId: customer.id,
       status: input.status,
       paymentMethod: input.paymentMethod,
@@ -45,15 +45,15 @@ export class CreateSaleUseCase {
     });
 
     await this.unityOfWork.start(async transactionContext => {
-      await this.salesRepository.create(sale, products, transactionContext);
+      await this.ordersRepository.create(order, products, transactionContext);
 
       for (const product of products) {
-        await this.productsRepository.incrementSalesCount(product.uuid, transactionContext);
+        await this.productsRepository.incrementOrdersCount(product.uuid, transactionContext);
       }
     });
 
     return {
-      uuid: sale.uuid
+      uuid: order.uuid
     };
   }
 }

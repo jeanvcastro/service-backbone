@@ -1,19 +1,19 @@
-import { Sale, SaleConstants, type SaleProps } from "@/core/domain/entities/Sale";
+import { Order, OrderConstants, type OrderProps } from "@/core/domain/entities/Order";
 import { faker } from "@faker-js/faker";
 
-export const makeSale = ({ ...override }: Partial<SaleProps> = {}): Sale => {
+export const makeOrder = ({ ...override }: Partial<OrderProps> = {}): Order => {
   const value = faker.number.int({
     min: 500,
     max: 500000
   });
 
-  const instance = new Sale({
+  const instance = new Order({
     id: faker.number.int(),
     uuid: faker.string.uuid(),
 
     customerId: faker.number.int(),
-    status: SaleConstants.Status.APPROVED,
-    paymentMethod: SaleConstants.PaymentMethod.CREDIT_CARD,
+    status: OrderConstants.Status.APPROVED,
+    paymentMethod: OrderConstants.PaymentMethod.CREDIT_CARD,
     value,
     attempts: 1,
     gatewayTransactionId: faker.string.uuid(),

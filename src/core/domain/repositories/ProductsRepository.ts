@@ -5,5 +5,5 @@ export interface ProductsRepository {
   findOne(uuid: string): Promise<Product | null>;
   create(product: Product): Promise<boolean>;
   findMany(uuids: string[]): Promise<Product[]>;
-  incrementSalesCount(uuid: string, ctx?: TransactionContext, by?: number): Promise<void>;
+  incrementOrdersCount(uuid: string, ctx?: TransactionContext, by?: number): Promise<void>;
 }

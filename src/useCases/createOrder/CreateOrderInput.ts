@@ -1,10 +1,10 @@
-import { SaleConstants } from "@/core/domain/entities/Sale";
+import { OrderConstants } from "@/core/domain/entities/Order";
 
-export type CreateSaleInput = {
+export type CreateOrderInput = {
   customerUuid: string;
   productUuids: string[];
-  status: SaleConstants.Status;
-  paymentMethod: SaleConstants.PaymentMethod;
+  status: OrderConstants.Status;
+  paymentMethod: OrderConstants.PaymentMethod;
   value: number;
   gatewayTransactionId: string;
   creditCardBrand?: string | null;

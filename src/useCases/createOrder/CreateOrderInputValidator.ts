@@ -1,12 +1,12 @@
-import { SaleConstants } from "@/core/domain/entities/Sale";
+import { OrderConstants } from "@/core/domain/entities/Order";
 import { z } from "zod";
 
-export const CreateSaleInputValidator = z.object({
+export const CreateOrderInputValidator = z.object({
   customerUuid: z.string().uuid(),
   productUuids: z.array(z.string().uuid()).min(1),
 
-  status: z.nativeEnum(SaleConstants.Status),
-  paymentMethod: z.nativeEnum(SaleConstants.PaymentMethod),
+  status: z.nativeEnum(OrderConstants.Status),
+  paymentMethod: z.nativeEnum(OrderConstants.PaymentMethod),
   value: z.number().min(500).max(500_000),
   gatewayTransactionId: z.string().min(1),
 

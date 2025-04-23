@@ -5,5 +5,5 @@ export const mockedProductsRepository: ProductsRepository = {
   findOne: vi.fn(),
   create: vi.fn(),
   findMany: vi.fn(),
-  incrementSalesCount: vi.fn()
+  incrementOrdersCount: vi.fn()
 };

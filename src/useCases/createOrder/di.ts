@@ -1,5 +1,5 @@
 import { DIContainer } from "@/core/DIContainer";
-import { ProductsRepository, SalesRepository } from "@/core/domain/repositories";
+import { OrdersRepository, ProductsRepository } from "@/core/domain/repositories";
 import { CustomersRepository } from "@/core/domain/repositories/CustomersRepository";
 import { ErrorHandler } from "@/core/ErrorHandler";
 import Logger from "@/core/Logger";
@@ -9,10 +9,10 @@ import { KnexUnitOfWork } from "@/infra/db/knex/KnexUnitOfWork";
 import { ExpressErrorHandler } from "@/infra/http/express/ExpressErrorHandler";
 import WinstonLogger from "@/infra/logging/WinstonLogger";
 import KnexCustomersRepository from "@/infra/repositories/knex/KnexCustomersRepository";
+import KnexOrdersRepository from "@/infra/repositories/knex/KnexOrdersRepository";
 import KnexProductsRepository from "@/infra/repositories/knex/KnexProductsRepository";
-import KnexSalesRepository from "@/infra/repositories/knex/KnexSalesRepository";
-import { CreateSaleController } from "./CreateSaleController";
-import { CreateSaleUseCase } from "./CreateSaleUseCase";
+import { CreateOrderController } from "./CreateOrderController";
+import { CreateOrderUseCase } from "./CreateOrderUseCase";
 
 export function configureDI() {
   const container = new DIContainer<{
@@ -21,14 +21,14 @@ export function configureDI() {
 
     CustomersRepository: CustomersRepository;
     ProductsRepository: ProductsRepository;
-    SalesRepository: SalesRepository;
+    OrdersRepository: OrdersRepository;
 
     Logger: Logger;
     ErrorHandler: ErrorHandler;
 
-    CreateSaleUseCase: CreateSaleUseCase;
+    CreateOrderUseCase: CreateOrderUseCase;
 
-    CreateSaleController: CreateSaleController;
+    CreateOrderController: CreateOrderController;
   }>();
 
   // database
@@ -38,7 +38,7 @@ export function configureDI() {
   // repositories
   container.add("CustomersRepository", ({ dbConnection }) => new KnexCustomersRepository(dbConnection));
   container.add("ProductsRepository", ({ dbConnection }) => new KnexProductsRepository(dbConnection));
-  container.add("SalesRepository", ({ dbConnection }) => new KnexSalesRepository(dbConnection));
+  container.add("OrdersRepository", ({ dbConnection }) => new KnexOrdersRepository(dbConnection));
 
   // services
   container.add("Logger", () => new WinstonLogger());
@@ -46,15 +46,15 @@ export function configureDI() {
 
   // use cases
   container.add(
-    "CreateSaleUseCase",
-    ({ CustomersRepository, ProductsRepository, SalesRepository, UnitOfWork }) =>
-      new CreateSaleUseCase(CustomersRepository, ProductsRepository, SalesRepository, UnitOfWork)
+    "CreateOrderUseCase",
+    ({ CustomersRepository, ProductsRepository, OrdersRepository, UnitOfWork }) =>
+      new CreateOrderUseCase(CustomersRepository, ProductsRepository, OrdersRepository, UnitOfWork)
   );
 
   // controllers
   container.add(
-    "CreateSaleController",
-    ({ CreateSaleUseCase, ErrorHandler }) => new CreateSaleController(CreateSaleUseCase, ErrorHandler)
+    "CreateOrderController",
+    ({ CreateOrderUseCase, ErrorHandler }) => new CreateOrderController(CreateOrderUseCase, ErrorHandler)
   );
 
   return container;

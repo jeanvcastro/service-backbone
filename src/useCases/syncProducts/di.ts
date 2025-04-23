@@ -3,7 +3,7 @@ import { ProductsRepository } from "@/core/domain/repositories";
 import Logger from "@/core/Logger";
 import { connection } from "@/infra/db/knex/connection";
 import WinstonLogger from "@/infra/logging/WinstonLogger";
-import KnexProductsRepository from "@/infra/repositories/KnexProductsRepository";
+import KnexProductsRepository from "@/infra/repositories/knex/KnexProductsRepository";
 import { SyncProductsUseCase } from "./SyncProductsUseCase";
 
 export function configureDI() {

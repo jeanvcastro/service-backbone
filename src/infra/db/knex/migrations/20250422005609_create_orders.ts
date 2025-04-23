@@ -3,6 +3,7 @@ import { Knex } from "knex";
 export async function up(knex: Knex): Promise<void> {
   await knex.schema.createTable("orders", table => {
     table.increments("id").primary();
+    table.integer("customer_id").unsigned().notNullable().references("id").inTable("customers").onDelete("CASCADE");
     table.uuid("uuid").notNullable().unique();
     table.enum("status", ["INITIATED", "APPROVED", "PENDING", "REFUSED"]).notNullable();
     table.enum("payment_method", ["CREDIT_CARD", "PIX", "BANK_SLIP"]).notNullable();

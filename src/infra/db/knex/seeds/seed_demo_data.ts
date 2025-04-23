@@ -11,11 +11,13 @@ export async function seed(knex: Knex): Promise<void> {
   const PRODUCT_2_UUID = "5a0739b5-099e-4bd1-85c4-cc69a6068cb9";
   const ORDER_UUID = "52491141-8728-483a-bf1c-1a33d56c34b9";
 
-  await knex("customers").insert({
-    uuid: CUSTOMER_UUID,
-    name: "Customer 1",
-    email: "customer@email.com"
-  });
+  const [{ id: customerId }] = await knex("customers")
+    .insert({
+      uuid: CUSTOMER_UUID,
+      name: "Customer 1",
+      email: "customer@email.com"
+    })
+    .returning("id");
 
   const [product1, product2] = await knex("products")
     .insert([
@@ -27,6 +29,7 @@ export async function seed(knex: Knex): Promise<void> {
   const [{ id: orderId }] = await knex("orders")
     .insert({
       uuid: ORDER_UUID,
+      customer_id: customerId,
       status: "APPROVED",
       payment_method: "CREDIT_CARD",
       value: 15000,

@@ -1,9 +1,9 @@
 import { ProductsRepository } from "@/domain/repositories";
+import LoggingService from "@/domain/services/LoggingService";
 import { knexConnection } from "@/infra/db/knex/connection";
-import WinstonLogger from "@/infra/logging/WinstonLogger";
 import KnexProductsRepository from "@/infra/repositories/knex/KnexProductsRepository";
+import WinstonLogger from "@/infra/services/logging/WinstonLogger";
 import { DIContainer } from "@/shared/kernel/DIContainer";
-import Logger from "@/shared/kernel/Logger";
 import { SyncProductsUseCase } from "./SyncProductsUseCase";
 
 export function configureDI() {
@@ -12,7 +12,7 @@ export function configureDI() {
 
     ProductsRepository: ProductsRepository;
 
-    Logger: Logger;
+    LoggingService: LoggingService;
 
     SyncProductsUseCase: SyncProductsUseCase;
   }>();
@@ -24,7 +24,7 @@ export function configureDI() {
   container.add("ProductsRepository", ({ knexConnection }) => new KnexProductsRepository(knexConnection));
 
   // services
-  container.add("Logger", () => new WinstonLogger());
+  container.add("LoggingService", () => new WinstonLogger());
 
   // use cases
   container.add("SyncProductsUseCase", ({ ProductsRepository }) => new SyncProductsUseCase(ProductsRepository));

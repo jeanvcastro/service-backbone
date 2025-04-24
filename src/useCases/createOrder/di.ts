@@ -1,18 +1,18 @@
 import { OrdersRepository, ProductsRepository } from "@/domain/repositories";
 import { CustomersRepository } from "@/domain/repositories/CustomersRepository";
+import LoggingService from "@/domain/services/LoggingService";
 import { knexConnection } from "@/infra/db/knex/connection";
 import { KnexUnitOfWork } from "@/infra/db/knex/KnexUnitOfWork";
 import { createRabbitMQConnection } from "@/infra/eventBus/rabbitMQ/connection";
 import { RabbitMQEventBus } from "@/infra/eventBus/rabbitMQ/RabbitMQEventBus";
 import { ExpressErrorHandler } from "@/infra/http/express/ExpressErrorHandler";
-import WinstonLogger from "@/infra/logging/WinstonLogger";
 import KnexCustomersRepository from "@/infra/repositories/knex/KnexCustomersRepository";
 import KnexOrdersRepository from "@/infra/repositories/knex/KnexOrdersRepository";
 import KnexProductsRepository from "@/infra/repositories/knex/KnexProductsRepository";
+import WinstonLogger from "@/infra/services/logging/WinstonLogger";
 import { DIContainer } from "@/shared/kernel/DIContainer";
 import { ErrorHandler } from "@/shared/kernel/ErrorHandler";
 import { EventBus } from "@/shared/kernel/EventBus";
-import Logger from "@/shared/kernel/Logger";
 import { TransactionContext, UnitOfWork } from "@/shared/kernel/UnityOfWork";
 import { Knex } from "knex";
 import { CreateOrderController } from "./CreateOrderController";
@@ -29,7 +29,7 @@ export function configureDI() {
     ProductsRepository: ProductsRepository;
     OrdersRepository: OrdersRepository;
 
-    Logger: Logger;
+    LoggingService: LoggingService;
     ErrorHandler: ErrorHandler;
 
     CreateOrderUseCase: CreateOrderUseCase;
@@ -54,8 +54,8 @@ export function configureDI() {
   container.add("OrdersRepository", ({ knexConnection }) => new KnexOrdersRepository(knexConnection));
 
   // services
-  container.add("Logger", () => new WinstonLogger());
-  container.add("ErrorHandler", ({ Logger }) => new ExpressErrorHandler(Logger));
+  container.add("LoggingService", () => new WinstonLogger());
+  container.add("ErrorHandler", ({ LoggingService }) => new ExpressErrorHandler(LoggingService));
 
   // use cases
   container.add(

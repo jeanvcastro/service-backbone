@@ -1,6 +1,6 @@
 type LogMethod = (data: unknown) => void;
 
-export default interface Logger {
+export default interface LoggingService {
   debug: LogMethod;
   info: LogMethod;
   warn: LogMethod;

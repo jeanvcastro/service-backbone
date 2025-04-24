@@ -1,10 +1,10 @@
-import { mockedEventBus } from "$/core/mockedEventBus";
-import { makeMockedUnitOfWork } from "$/core/mockedUnitOfWork";
 import { mockedCustomersRepository } from "$/domain/repositories/mockedCustomersRepository";
 import { mockedOrdersRepository } from "$/domain/repositories/mockedOrdersRepository";
 import { mockedProductsRepository } from "$/domain/repositories/mockedProductsRepository";
 import { makeCustomer } from "$/factories/makeCustomer";
 import { makeProduct } from "$/factories/makeProduct";
+import { mockedEventBus } from "$/shared/kernel/mockedEventBus";
+import { makeMockedUnitOfWork } from "$/shared/kernel/mockedUnitOfWork";
 import { Order, OrderConstants } from "@/domain/entities/Order";
 import { beforeEach, describe, expect, it, Mock, vi } from "vitest";
 import { CreateOrderInput } from "./CreateOrderInput";
@@ -136,5 +136,47 @@ describe("CreateOrderUseCase", () => {
 
     expect(incrementSpy).toHaveBeenCalledOnce();
     expect(incrementSpy).toHaveBeenCalledWith(product.uuid, expect.any(Object));
+  });
+
+  it("should create an order and publish an event", async () => {
+    const customer = makeCustomer();
+    const product = makeProduct();
+
+    (mockedCustomersRepository.findOne as Mock).mockResolvedValueOnce(customer);
+    (mockedProductsRepository.findMany as Mock).mockResolvedValueOnce([product]);
+
+    const publishSpy = vi.spyOn(mockedEventBus, "publish");
+    const sut = new CreateOrderUseCase(
+      mockedCustomersRepository,
+      mockedProductsRepository,
+      mockedOrdersRepository,
+      mockedUnitOfWork,
+      mockedEventBus
+    );
+
+    const input: CreateOrderInput = {
+      customerUuid: customer.uuid,
+      productUuids: [product.uuid],
+      status: OrderConstants.Status.APPROVED,
+      paymentMethod: OrderConstants.PaymentMethod.PIX,
+      value: 5000,
+      gatewayTransactionId: "any-tx-id",
+      qrcode: "any-qrcode",
+      expiration: new Date()
+    };
+
+    await sut.execute(input);
+
+    expect(publishSpy).toHaveBeenCalledOnce();
+    expect(publishSpy).toHaveBeenCalledWith(
+      expect.objectContaining({
+        type: "order.created",
+        data: expect.objectContaining({
+          uuid: expect.any(String),
+          customer: expect.any(Object),
+          products: expect.any(Array)
+        })
+      })
+    );
   });
 });

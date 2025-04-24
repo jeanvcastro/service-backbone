@@ -1,12 +1,12 @@
 import { BaseError } from "@/domain/errors";
+import LoggingService from "@/domain/services/LoggingService";
 import { isDevelopment } from "@/shared/env";
 import { ErrorHandler, ErrorResponse } from "@/shared/kernel/ErrorHandler";
-import Logger from "@/shared/kernel/Logger";
 import { type Response } from "express";
 import { ZodError } from "zod";
 
 export class ExpressErrorHandler implements ErrorHandler {
-  constructor(private readonly logger: Logger) {}
+  constructor(private readonly logger: LoggingService) {}
 
   public handleError(response: Response, error: unknown, httpCode: number = 400): Response {
     this.logger.error(error);

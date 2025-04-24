@@ -3,8 +3,8 @@ import compression from "compression";
 import cors from "cors";
 import express from "express";
 import helmet from "helmet";
-import v1Router from "./api/v1";
-import { camelCase } from "./middleware/camelCase";
+import v1Router from "./express/api/v1";
+import { camelCase } from "./express/middleware/camelCase";
 
 const app = express();
 

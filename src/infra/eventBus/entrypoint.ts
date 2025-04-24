@@ -1,7 +1,7 @@
 import { appName } from "@/shared/env";
-import { RabbitMQEventBus } from "./RabbitMQEventBus";
-import { createRabbitMQConnection } from "./connection";
-import { setupEventListeners } from "./setupEventListeners";
+import { createRabbitMQConnection } from "./rabbitMQ/connection";
+import { RabbitMQEventBus } from "./rabbitMQ/RabbitMQEventBus";
+import { setupEventListeners } from "./rabbitMQ/setupEventListeners";
 
 async function startEventListenerApp() {
   const eventBus = new RabbitMQEventBus(createRabbitMQConnection);

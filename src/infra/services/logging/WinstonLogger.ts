@@ -1,10 +1,10 @@
 import { BaseError } from "@/domain/errors";
+import LoggingService from "@/domain/services/LoggingService";
 import { isDevelopment } from "@/shared/env";
-import Logger from "@/shared/kernel/Logger";
 import winston, { format, transports, type transport } from "winston";
 import { ZodError } from "zod";
 
-export default class WinstonLogger implements Logger {
+export default class WinstonLogger implements LoggingService {
   winstonLogger: winston.Logger;
 
   constructor() {

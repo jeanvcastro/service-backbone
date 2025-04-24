@@ -13,10 +13,10 @@ const commonOptions = {
 };
 
 const targets = [
-  { name: "web", entry: "src/infra/http/express/entrypoint.ts" },
+  { name: "web", entry: "src/infra/http/entrypoint.ts" },
   { name: "cli", entry: "src/infra/cli/entrypoint.ts" },
   { name: "schedule", entry: "src/infra/schedule/entrypoint.ts" },
-  { name: "eventbus", entry: "src/infra/eventBus/rabbitMQ/entrypoint.ts" }
+  { name: "eventbus", entry: "src/infra/eventBus/entrypoint.ts" }
 ];
 
 await Promise.all(

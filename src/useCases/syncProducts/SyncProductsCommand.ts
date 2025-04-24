@@ -7,7 +7,7 @@ export const builder = {};
 export const handler = async () => {
   const container = configureDI();
   const useCase = container.get("SyncProductsUseCase");
-  const logger = container.get("Logger");
+  const logger = container.get("LoggingService");
 
   try {
     const externalProducts = [

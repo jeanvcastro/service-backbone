@@ -1,5 +1,6 @@
 import { build } from "esbuild";
-import { rmSync } from "fs";
+import { cpSync, existsSync, mkdirSync, rmSync } from "fs";
+import path from "path";
 
 rmSync("dist", { recursive: true, force: true });
 
@@ -28,3 +29,18 @@ await Promise.all(
     })
   )
 );
+
+function copyStaticAssets(targets) {
+  const sourcePath = path.resolve("src/infra/services/templating/Handlebars/templates");
+
+  if (!existsSync(sourcePath)) return;
+
+  for (const target of targets) {
+    const destPath = path.resolve(`dist/${target.name}/templates`);
+
+    mkdirSync(path.dirname(destPath), { recursive: true });
+    cpSync(sourcePath, destPath, { recursive: true });
+  }
+}
+
+copyStaticAssets(targets);

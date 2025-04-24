@@ -6,6 +6,7 @@ import { makeProduct } from "$/factories/makeProduct";
 import { mockedEventBus } from "$/shared/kernel/mockedEventBus";
 import { makeMockedUnitOfWork } from "$/shared/kernel/mockedUnitOfWork";
 import { Order, OrderConstants } from "@/domain/entities/Order";
+import { OrderCreatedEvent } from "@/domain/events/OrderCreatedEvent";
 import { beforeEach, describe, expect, it, Mock, vi } from "vitest";
 import { CreateOrderInput } from "./CreateOrderInput";
 import { CreateOrderUseCase } from "./CreateOrderUseCase";
@@ -146,6 +147,7 @@ describe("CreateOrderUseCase", () => {
     (mockedProductsRepository.findMany as Mock).mockResolvedValueOnce([product]);
 
     const publishSpy = vi.spyOn(mockedEventBus, "publish");
+
     const sut = new CreateOrderUseCase(
       mockedCustomersRepository,
       mockedProductsRepository,
@@ -168,15 +170,11 @@ describe("CreateOrderUseCase", () => {
     await sut.execute(input);
 
     expect(publishSpy).toHaveBeenCalledOnce();
-    expect(publishSpy).toHaveBeenCalledWith(
-      expect.objectContaining({
-        type: "order.created",
-        data: expect.objectContaining({
-          uuid: expect.any(String),
-          customer: expect.any(Object),
-          products: expect.any(Array)
-        })
-      })
-    );
+
+    const eventInstance = publishSpy.mock.calls[0][0];
+    expect(eventInstance).toBeInstanceOf(OrderCreatedEvent);
+    expect(eventInstance.type).toBe(OrderCreatedEvent.type);
+    expect(eventInstance.data.customer.name).toBe(customer.name);
+    expect(eventInstance.data.products).toHaveLength(1);
   });
 });

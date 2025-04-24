@@ -22,7 +22,7 @@ export default class SESEmailService implements EmailService {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  async sendMail(message: EmailMessage, template: string, data: Record<string, any> = {}): Promise<boolean> {
+  async sendEmail(message: EmailMessage, template: string, data: Record<string, any> = {}): Promise<boolean> {
     try {
       const sendEmailCommandInput = this.getSendEmailCommandInput(message, template, data);
       await this.transporter.sendEmail(sendEmailCommandInput);

@@ -11,5 +11,5 @@ export interface EmailMessage {
 
 export interface EmailService {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  sendMail: (message: EmailMessage, template: string, data?: Record<string, any>) => Promise<boolean>;
+  sendEmail: (message: EmailMessage, template: string, data?: Record<string, any>) => Promise<boolean>;
 }

@@ -1,9 +1,7 @@
 import { Customer } from "@/domain/entities/Customer";
 import { Order } from "@/domain/entities/Order";
 import { Product } from "@/domain/entities/Product";
-import { CustomerMapper } from "@/domain/mappers/CustomerMapper";
-import { OrderMapper } from "@/domain/mappers/OrderMapper";
-import { ProductMapper } from "@/domain/mappers/ProductMapper";
+import { OrderCreatedEvent } from "@/domain/events/OrderCreatedEvent";
 import { CustomersRepository } from "@/domain/repositories/CustomersRepository";
 import { OrdersRepository } from "@/domain/repositories/OrdersRepository";
 import { ProductsRepository } from "@/domain/repositories/ProductsRepository";
@@ -57,14 +55,26 @@ export class CreateOrderUseCase {
       }
     });
 
-    this.eventBus.publish({
-      type: "order.created",
-      data: {
-        ...OrderMapper.toPersistence(order),
-        customer: CustomerMapper.toPersistence(customer),
-        products: products.map(product => ProductMapper.toPersistence(product))
-      }
-    });
+    this.eventBus.publish(
+      new OrderCreatedEvent({
+        order: {
+          uuid: order.uuid,
+          status: order.status,
+          paymentMethod: order.paymentMethod,
+          value: order.value
+        },
+        customer: {
+          uuid: customer.uuid,
+          name: customer.name,
+          email: customer.email
+        },
+        products: products.map(product => ({
+          uuid: product.uuid,
+          name: product.name,
+          price: product.price
+        }))
+      })
+    );
 
     return {
       uuid: order.uuid

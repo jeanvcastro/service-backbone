@@ -8,7 +8,8 @@
   },
   "scripts": {
     "dev": "tsx watch src/infra/http/express/app.ts",
-    "schedule": "tsx watch src/infra/schedule/schedule.ts",
+    "schedule": "tsx watch src/infra/schedule/app.ts",
+    "eventbus": "tsx watch src/infra/eventBus/rabbitMQ/app.ts",
     "build": "node esbuild.config.mjs",
     "start": "node dist/web/app.js",
     "lint": "eslint . --ext .ts",
@@ -27,6 +28,7 @@
   "devDependencies": {
     "@eslint/js": "^9.24.0",
     "@faker-js/faker": "^9.7.0",
+    "@types/amqplib": "^0.10.7",
     "@types/compression": "^1.7.5",
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.1",
@@ -46,6 +48,7 @@
     "vitest": "^3.1.1"
   },
   "dependencies": {
+    "amqplib": "^0.10.7",
     "compression": "^1.8.0",
     "cors": "^2.8.5",
     "dotenv": "^16.5.0",

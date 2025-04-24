@@ -1,6 +1,6 @@
-import Logger from "@/core/Logger";
 import { BaseError } from "@/domain/errors";
 import { isDevelopment } from "@/shared/env";
+import Logger from "@/shared/kernel/Logger";
 import winston, { format, transports, type transport } from "winston";
 import { ZodError } from "zod";
 

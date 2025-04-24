@@ -1,7 +1,7 @@
-import { ErrorHandler, ErrorResponse } from "@/core/ErrorHandler";
-import Logger from "@/core/Logger";
 import { BaseError } from "@/domain/errors";
 import { isDevelopment } from "@/shared/env";
+import { ErrorHandler, ErrorResponse } from "@/shared/kernel/ErrorHandler";
+import Logger from "@/shared/kernel/Logger";
 import { type Response } from "express";
 import { ZodError } from "zod";
 

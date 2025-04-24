@@ -1,4 +1,4 @@
-import { TransactionContext, UnitOfWork } from "@/core/UnityOfWork";
+import { TransactionContext, UnitOfWork } from "@/shared/kernel/UnityOfWork";
 import type { Knex } from "knex";
 
 export class KnexTransactionContext implements TransactionContext {

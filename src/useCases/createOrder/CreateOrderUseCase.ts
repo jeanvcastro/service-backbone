@@ -1,10 +1,14 @@
-import { TransactionContext, UnitOfWork } from "@/core/UnityOfWork";
 import { Customer } from "@/domain/entities/Customer";
 import { Order } from "@/domain/entities/Order";
 import { Product } from "@/domain/entities/Product";
+import { CustomerMapper } from "@/domain/mappers/CustomerMapper";
+import { OrderMapper } from "@/domain/mappers/OrderMapper";
+import { ProductMapper } from "@/domain/mappers/ProductMapper";
 import { CustomersRepository } from "@/domain/repositories/CustomersRepository";
 import { OrdersRepository } from "@/domain/repositories/OrdersRepository";
 import { ProductsRepository } from "@/domain/repositories/ProductsRepository";
+import { EventBus } from "@/shared/kernel/EventBus";
+import { TransactionContext, UnitOfWork } from "@/shared/kernel/UnityOfWork";
 import { CreateOrderInput } from "./CreateOrderInput";
 import { CreateOrderOutput } from "./CreateOrderOutput";
 
@@ -13,7 +17,8 @@ export class CreateOrderUseCase {
     private readonly customersRepository: CustomersRepository,
     private readonly productsRepository: ProductsRepository,
     private readonly ordersRepository: OrdersRepository,
-    private readonly unityOfWork: UnitOfWork<TransactionContext>
+    private readonly unityOfWork: UnitOfWork<TransactionContext>,
+    private readonly eventBus: EventBus
   ) {}
 
   async execute(input: CreateOrderInput): Promise<CreateOrderOutput> {
@@ -49,6 +54,15 @@ export class CreateOrderUseCase {
 
       for (const product of products) {
         await this.productsRepository.incrementOrdersCount(product.uuid, transactionContext);
+      }
+    });
+
+    this.eventBus.publish({
+      type: "order.created",
+      data: {
+        ...OrderMapper.toPersistence(order),
+        customer: CustomerMapper.toPersistence(customer),
+        products: products.map(product => ProductMapper.toPersistence(product))
       }
     });
 

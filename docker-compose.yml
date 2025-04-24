@@ -11,6 +11,19 @@ services:
       retries: 10
       timeout: 3s
 
+  rabbitmq:
+    image: rabbitmq:3.13-management-alpine
+    container_name: backbone_rabbit
+    env_file: .env
+    ports:
+      - "5672:5672" # AMQP
+      - "15672:15672" # Management UI
+    healthcheck:
+      test: ["CMD-SHELL", "rabbitmq-diagnostics -q status"]
+      interval: 10s
+      retries: 5
+      timeout: 3s
+
   migrations:
     build:
       context: .
@@ -32,6 +45,8 @@ services:
     depends_on:
       migrations:
         condition: service_completed_successfully
+      rabbitmq:
+        condition: service_healthy
     ports: ["3000:3000"]
     command: ["node", "dist/web/app.js"]
 
@@ -45,7 +60,23 @@ services:
     depends_on:
       migrations:
         condition: service_completed_successfully
+      rabbitmq:
+        condition: service_healthy
     command: ["node", "dist/schedule/app.js"]
+
+  eventbus:
+    profiles: ["runtime"] # only run in runtime profile (docker compose --profile runtime up)
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: production # lean image (dist + prod deps)
+    env_file: .env
+    depends_on:
+      migrations:
+        condition: service_completed_successfully
+      rabbitmq:
+        condition: service_healthy
+    command: ["node", "dist/eventbus/app.js"]
 
 volumes:
   db_data:

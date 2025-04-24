@@ -1,4 +1,4 @@
-import { ErrorHandler } from "@/core/ErrorHandler";
+import { ErrorHandler } from "@/shared/kernel/ErrorHandler";
 import { type Response } from "express";
 import { objectToSnake } from "ts-case-convert";
 

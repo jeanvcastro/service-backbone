@@ -1,4 +1,4 @@
-import { TransactionContext } from "@/core/UnityOfWork";
+import { TransactionContext } from "@/shared/kernel/UnityOfWork";
 import { Order, Product } from "../entities";
 
 export interface OrdersRepository {

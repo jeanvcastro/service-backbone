@@ -1,3 +1,4 @@
+import { mockedEventBus } from "$/core/mockedEventBus";
 import { makeMockedUnitOfWork } from "$/core/mockedUnitOfWork";
 import { mockedCustomersRepository } from "$/domain/repositories/mockedCustomersRepository";
 import { mockedOrdersRepository } from "$/domain/repositories/mockedOrdersRepository";
@@ -24,7 +25,8 @@ describe("CreateOrderUseCase", () => {
       mockedCustomersRepository,
       mockedProductsRepository,
       mockedOrdersRepository,
-      mockedUnitOfWork
+      mockedUnitOfWork,
+      mockedEventBus
     );
 
     const input: CreateOrderInput = {
@@ -51,7 +53,8 @@ describe("CreateOrderUseCase", () => {
       mockedCustomersRepository,
       mockedProductsRepository,
       mockedOrdersRepository,
-      mockedUnitOfWork
+      mockedUnitOfWork,
+      mockedEventBus
     );
 
     const input: CreateOrderInput = {
@@ -80,7 +83,8 @@ describe("CreateOrderUseCase", () => {
       mockedCustomersRepository,
       mockedProductsRepository,
       mockedOrdersRepository,
-      mockedUnitOfWork
+      mockedUnitOfWork,
+      mockedEventBus
     );
 
     const input: CreateOrderInput = {
@@ -113,7 +117,8 @@ describe("CreateOrderUseCase", () => {
       mockedCustomersRepository,
       mockedProductsRepository,
       mockedOrdersRepository,
-      mockedUnitOfWork
+      mockedUnitOfWork,
+      mockedEventBus
     );
 
     const input: CreateOrderInput = {

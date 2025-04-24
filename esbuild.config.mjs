@@ -28,3 +28,9 @@ build({
   entryPoints: ["src/infra/schedule/app.ts"],
   outdir: "dist/schedule"
 });
+
+build({
+  ...commonOptions,
+  entryPoints: ["src/infra/eventBus/rabbitMQ/app.ts"],
+  outdir: "dist/eventbus"
+});

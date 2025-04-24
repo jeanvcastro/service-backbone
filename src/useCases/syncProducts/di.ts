@@ -1,14 +1,14 @@
-import { DIContainer } from "@/core/DIContainer";
-import Logger from "@/core/Logger";
 import { ProductsRepository } from "@/domain/repositories";
-import { connection } from "@/infra/db/knex/connection";
+import { knexConnection } from "@/infra/db/knex/connection";
 import WinstonLogger from "@/infra/logging/WinstonLogger";
 import KnexProductsRepository from "@/infra/repositories/knex/KnexProductsRepository";
+import { DIContainer } from "@/shared/kernel/DIContainer";
+import Logger from "@/shared/kernel/Logger";
 import { SyncProductsUseCase } from "./SyncProductsUseCase";
 
 export function configureDI() {
   const container = new DIContainer<{
-    dbConnection: typeof connection;
+    knexConnection: typeof knexConnection;
 
     ProductsRepository: ProductsRepository;
 
@@ -18,10 +18,10 @@ export function configureDI() {
   }>();
 
   // database
-  container.add("dbConnection", () => connection);
+  container.add("knexConnection", () => knexConnection);
 
   // repositories
-  container.add("ProductsRepository", ({ dbConnection }) => new KnexProductsRepository(dbConnection));
+  container.add("ProductsRepository", ({ knexConnection }) => new KnexProductsRepository(knexConnection));
 
   // services
   container.add("Logger", () => new WinstonLogger());

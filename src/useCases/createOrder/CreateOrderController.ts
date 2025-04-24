@@ -1,7 +1,7 @@
 import { BaseController } from "@/infra/http/express/BaseController";
 import { CreateOrderUseCase } from "./CreateOrderUseCase";
 
-import { ErrorHandler } from "@/core/ErrorHandler";
+import { ErrorHandler } from "@/shared/kernel/ErrorHandler";
 import { Request, Response } from "express";
 import { CreateOrderInputValidator } from "./CreateOrderInputValidator";
 

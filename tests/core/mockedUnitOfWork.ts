@@ -1,4 +1,4 @@
-import { TransactionContext, UnitOfWork } from "@/core/UnityOfWork";
+import { TransactionContext, UnitOfWork } from "@/shared/kernel/UnityOfWork";
 import { vi } from "vitest";
 
 export const makeMockedUnitOfWork = (): UnitOfWork<TransactionContext> => ({

@@ -1,4 +1,4 @@
-# service-backbone
+# 🦴 service-backbone
 
 > Backend service backbone designed to bootstrap microservices with a clear and scalable structure.
 

@@ -8,29 +8,23 @@ const commonOptions = {
   format: "cjs",
   sourcemap: true,
   bundle: true,
+  entryNames: "app", // app.js
   external: ["better-sqlite3", "mysql", "mysql2", "oracledb", "pg-query-stream", "sqlite3", "tedious"]
 };
 
-build({
-  ...commonOptions,
-  entryPoints: ["src/infra/http/express/app.ts"],
-  outdir: "dist/web"
-});
+const targets = [
+  { name: "web", entry: "src/infra/http/express/entrypoint.ts" },
+  { name: "cli", entry: "src/infra/cli/entrypoint.ts" },
+  { name: "schedule", entry: "src/infra/schedule/entrypoint.ts" },
+  { name: "eventbus", entry: "src/infra/eventBus/rabbitMQ/entrypoint.ts" }
+];
 
-build({
-  ...commonOptions,
-  entryPoints: ["src/infra/cli/app.ts"],
-  outdir: "dist/cli"
-});
-
-build({
-  ...commonOptions,
-  entryPoints: ["src/infra/schedule/app.ts"],
-  outdir: "dist/schedule"
-});
-
-build({
-  ...commonOptions,
-  entryPoints: ["src/infra/eventBus/rabbitMQ/app.ts"],
-  outdir: "dist/eventbus"
-});
+await Promise.all(
+  targets.map(target =>
+    build({
+      ...commonOptions,
+      entryPoints: [target.entry],
+      outdir: `dist/${target.name}`
+    })
+  )
+);

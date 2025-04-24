@@ -7,9 +7,9 @@
     "node": "22.x"
   },
   "scripts": {
-    "dev": "tsx watch src/infra/http/express/app.ts",
-    "schedule": "tsx watch src/infra/schedule/app.ts",
-    "eventbus": "tsx watch src/infra/eventBus/rabbitMQ/app.ts",
+    "dev": "tsx watch src/infra/http/express/entrypoint.ts",
+    "schedule": "tsx watch src/infra/schedule/entrypoint.ts",
+    "eventbus": "tsx watch src/infra/eventBus/rabbitMQ/entrypoint.ts",
     "build": "node esbuild.config.mjs",
     "start": "node dist/web/app.js",
     "lint": "eslint . --ext .ts",

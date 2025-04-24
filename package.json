@@ -8,6 +8,7 @@
   },
   "scripts": {
     "dev": "tsx watch src/infra/http/express/app.ts",
+    "schedule": "tsx watch src/infra/schedule/schedule.ts",
     "build": "node esbuild.config.mjs",
     "start": "node dist/web/app.js",
     "lint": "eslint . --ext .ts",

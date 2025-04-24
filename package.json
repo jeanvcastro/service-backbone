@@ -2,7 +2,7 @@
   "name": "service-backbone",
   "version": "1.0.0",
   "description": "Backend service backbone designed to bootstrap microservices with a clear and scalable structure.",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "engines": {
     "node": "22.x"
   },

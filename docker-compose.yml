@@ -23,6 +23,7 @@ services:
     restart: "no" # run once and finish
 
   app:
+    profiles: ["runtime"]
     build:
       context: .
       dockerfile: Dockerfile
@@ -35,6 +36,7 @@ services:
     command: ["node", "dist/web/app.js"]
 
   schedule:
+    profiles: ["runtime"]
     build:
       context: .
       dockerfile: Dockerfile

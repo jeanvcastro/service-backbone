@@ -23,7 +23,7 @@ services:
     restart: "no" # run once and finish
 
   app:
-    profiles: ["runtime"]
+    profiles: ["runtime"] # only run in runtime profile (docker compose --profile runtime up)
     build:
       context: .
       dockerfile: Dockerfile
@@ -36,7 +36,7 @@ services:
     command: ["node", "dist/web/app.js"]
 
   schedule:
-    profiles: ["runtime"]
+    profiles: ["runtime"] # only run in runtime profile (docker compose --profile runtime up)
     build:
       context: .
       dockerfile: Dockerfile

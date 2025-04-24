@@ -1,5 +1,6 @@
 import { OrderConstants } from "@/domain/entities/Order";
 import { z } from "zod";
+import { CreateOrderInput } from "./CreateOrderInput";
 
 export const CreateOrderInputValidator = z.object({
   customerUuid: z.string().uuid(),
@@ -18,4 +19,4 @@ export const CreateOrderInputValidator = z.object({
   barcode: z.string().min(1).nullable().optional(),
   qrcode: z.string().min(1).nullable().optional(),
   expiration: z.date().nullable().optional()
-});
+}) satisfies z.ZodType<CreateOrderInput>;

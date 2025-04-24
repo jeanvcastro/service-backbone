@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { SyncProductsInput } from "./SyncProductsInput";
 
 const productSchema = z.object({
   uuid: z.string().uuid(),
@@ -8,4 +9,4 @@ const productSchema = z.object({
 
 export const SyncProductsInputValidator = z.object({
   products: z.array(productSchema)
-});
+}) satisfies z.ZodType<SyncProductsInput>;

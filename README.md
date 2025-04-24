@@ -97,28 +97,40 @@ container.add("CreateOrderController", ({ CreateOrderUseCase, ErrorHandler }) =>
 
 ## ✅ Validação Declarativa com Zod
 
-Cada caso de uso define suas próprias regras de validação de entrada utilizando o [`zod`](https://github.com/colinhacks/zod), mantendo a validação coesa, explícita e fortemente tipada.
+Cada caso de uso define seu contrato de entrada (`Input.ts`) como tipo TypeScript explícito, e valida os dados recebidos com `zod`. A consistência entre o tipo e o schema é garantida com `satisfies`, um recurso do TypeScript 4.9+.
 
 Exemplo:
 
 ```ts
+// CreateOrderInput.ts
+export interface CreateOrderInput {
+  customerUuid: string;
+  productUuids: string[];
+  status: "APPROVED" | "REJECTED";
+  value: number;
+  // ...
+}
+
+// CreateOrderInputValidator.ts
+import { z } from "zod";
+import type { CreateOrderInput } from "./CreateOrderInput";
+
 export const CreateOrderInputValidator = z.object({
   customerUuid: z.string().uuid(),
   productUuids: z.array(z.string().uuid()).min(1),
-  status: z.nativeEnum(OrderConstants.Status),
-  value: z.number().min(500).max(500_000),
-  ...
-});
+  status: z.enum(["APPROVED", "REJECTED"]),
+  value: z.number().min(500)
+  // ...
+}) satisfies z.ZodType<CreateOrderInput>;
 ```
-
-Essa validação pode ser reutilizada em qualquer camada (HTTP, CLI, eventos) sem dependência de framework.
 
 ### 🔒 Benefícios
 
-- Validação **totalmente desacoplada de transporte**
-- **Reutilizável** por entrada (REST, terminal, fila...)
-- Tipagem **estrita e inferível** via TypeScript
-- Fácil de testar e manter
+- O tipo `CreateOrderInput` é a **fonte da verdade** para o caso de uso
+- O schema Zod garante que **os dados de entrada sejam válidos**
+- `satisfies` previne inconsistência entre validação e contrato
+- O mesmo schema pode ser reutilizado em qualquer entrada: **HTTP, CLI, eventos**
+- Nenhuma dependência do Zod vaza para o domínio
 
 ---
 
@@ -762,9 +774,10 @@ O projeto adota uma série de boas práticas que favorecem a **clareza, escalabi
 
 ### ✍️ Validação Explícita
 
-- Cada entrada (HTTP, CLI, fila) valida seus dados com `zod`
-- A tipagem vem da validação, garantindo segurança e previsibilidade
-- Sem dependência de transporte ou acoplamento a frameworks
+- Cada caso de uso define um **tipo de entrada explícito** (`Input.ts`) como contrato
+- A validação com `zod` garante que os dados recebidos estejam **conformes esse contrato**
+- O uso de `satisfies` garante que **tipo e schema estão sempre sincronizados**
+- A validação é totalmente **desacoplada do transporte** (pode ser usada em HTTP, CLI, eventos, etc.)
 
 ---
 

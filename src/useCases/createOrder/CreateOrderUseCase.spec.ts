@@ -1,7 +1,7 @@
-import { mockedCustomersRepository } from "$/core/domain/repositories/mockedCustomersRepository";
-import { mockedOrdersRepository } from "$/core/domain/repositories/mockedOrdersRepository";
-import { mockedProductsRepository } from "$/core/domain/repositories/mockedProductsRepository";
 import { makeMockedUnitOfWork } from "$/core/mockedUnitOfWork";
+import { mockedCustomersRepository } from "$/domain/repositories/mockedCustomersRepository";
+import { mockedOrdersRepository } from "$/domain/repositories/mockedOrdersRepository";
+import { mockedProductsRepository } from "$/domain/repositories/mockedProductsRepository";
 import { makeCustomer } from "$/factories/makeCustomer";
 import { makeProduct } from "$/factories/makeProduct";
 import { Order, OrderConstants } from "@/domain/entities/Order";

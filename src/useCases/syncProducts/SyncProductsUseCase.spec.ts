@@ -1,4 +1,4 @@
-import { mockedProductsRepository } from "$/core/domain/repositories/mockedProductsRepository";
+import { mockedProductsRepository } from "$/domain/repositories/mockedProductsRepository";
 import { makeProduct } from "$/factories/makeProduct";
 import { Product } from "@/domain/entities";
 import { beforeEach, describe, expect, it, Mock, vi } from "vitest";

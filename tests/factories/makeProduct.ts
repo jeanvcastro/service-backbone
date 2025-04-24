@@ -1,4 +1,4 @@
-import { Product, type ProductProps } from "@/core/domain/entities/Product";
+import { Product, type ProductProps } from "@/domain/entities/Product";
 import { faker } from "@faker-js/faker";
 
 export const makeProduct = ({ ...override }: Partial<ProductProps> = {}): Product => {

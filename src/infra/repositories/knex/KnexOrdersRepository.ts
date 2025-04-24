@@ -1,6 +1,6 @@
-import { Order, Product } from "@/core/domain/entities";
-import { OrderMapper } from "@/core/domain/mappers/OrderMapper";
-import { OrdersRepository } from "@/core/domain/repositories";
+import { Order, Product } from "@/domain/entities";
+import { OrderMapper } from "@/domain/mappers/OrderMapper";
+import { OrdersRepository } from "@/domain/repositories";
 import { Knex } from "knex";
 import { objectToSnake } from "ts-case-convert";
 import { KnexTransactionContext } from "../../db/knex/KnexUnitOfWork";

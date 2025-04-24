@@ -1,5 +1,5 @@
-import { BaseError } from "@/core/domain/errors";
 import Logger from "@/core/Logger";
+import { BaseError } from "@/domain/errors";
 import { isDevelopment } from "@/shared/env";
 import winston, { format, transports, type transport } from "winston";
 import { ZodError } from "zod";

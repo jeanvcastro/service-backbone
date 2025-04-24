@@ -19,11 +19,6 @@ app.use(compression());
 app.use(helmet());
 app.use(camelCase);
 
-app.get("/", (_, res) => {
-  console.log(`[${appName}]: Health check`);
-  res.status(200).type("text/plain").send("OK");
-});
-
 app.use("/api/v1", v1Router);
 
 app.listen(appPort, () => {

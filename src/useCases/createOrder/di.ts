@@ -1,9 +1,9 @@
 import { DIContainer } from "@/core/DIContainer";
-import { OrdersRepository, ProductsRepository } from "@/core/domain/repositories";
-import { CustomersRepository } from "@/core/domain/repositories/CustomersRepository";
 import { ErrorHandler } from "@/core/ErrorHandler";
 import Logger from "@/core/Logger";
 import { TransactionContext, UnitOfWork } from "@/core/UnityOfWork";
+import { OrdersRepository, ProductsRepository } from "@/domain/repositories";
+import { CustomersRepository } from "@/domain/repositories/CustomersRepository";
 import { connection } from "@/infra/db/knex/connection";
 import { KnexUnitOfWork } from "@/infra/db/knex/KnexUnitOfWork";
 import { ExpressErrorHandler } from "@/infra/http/express/ExpressErrorHandler";

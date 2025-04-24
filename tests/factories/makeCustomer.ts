@@ -1,4 +1,4 @@
-import { Customer, type CustomerProps } from "@/core/domain/entities/Customer";
+import { Customer, type CustomerProps } from "@/domain/entities/Customer";
 import { faker } from "@faker-js/faker";
 
 export const makeCustomer = ({ ...override }: Partial<CustomerProps> = {}): Customer => {

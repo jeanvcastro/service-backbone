@@ -1,10 +1,10 @@
-import { Customer } from "@/core/domain/entities/Customer";
-import { Order } from "@/core/domain/entities/Order";
-import { Product } from "@/core/domain/entities/Product";
-import { CustomersRepository } from "@/core/domain/repositories/CustomersRepository";
-import { OrdersRepository } from "@/core/domain/repositories/OrdersRepository";
-import { ProductsRepository } from "@/core/domain/repositories/ProductsRepository";
 import { TransactionContext, UnitOfWork } from "@/core/UnityOfWork";
+import { Customer } from "@/domain/entities/Customer";
+import { Order } from "@/domain/entities/Order";
+import { Product } from "@/domain/entities/Product";
+import { CustomersRepository } from "@/domain/repositories/CustomersRepository";
+import { OrdersRepository } from "@/domain/repositories/OrdersRepository";
+import { ProductsRepository } from "@/domain/repositories/ProductsRepository";
 import { CreateOrderInput } from "./CreateOrderInput";
 import { CreateOrderOutput } from "./CreateOrderOutput";
 

@@ -1,6 +1,6 @@
 import { mockedProductsRepository } from "$/core/domain/repositories/mockedProductsRepository";
 import { makeProduct } from "$/factories/makeProduct";
-import { Product } from "@/core/domain/entities";
+import { Product } from "@/domain/entities";
 import { beforeEach, describe, expect, it, Mock, vi } from "vitest";
 import { SyncProductsInput } from "./SyncProductsInput";
 import { SyncProductsUseCase } from "./SyncProductsUseCase";

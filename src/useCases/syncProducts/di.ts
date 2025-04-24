@@ -1,6 +1,6 @@
 import { DIContainer } from "@/core/DIContainer";
-import { ProductsRepository } from "@/core/domain/repositories";
 import Logger from "@/core/Logger";
+import { ProductsRepository } from "@/domain/repositories";
 import { connection } from "@/infra/db/knex/connection";
 import WinstonLogger from "@/infra/logging/WinstonLogger";
 import KnexProductsRepository from "@/infra/repositories/knex/KnexProductsRepository";

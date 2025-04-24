@@ -1,5 +1,5 @@
-import { ProductMapper } from "@/core/domain/mappers/ProductMapper";
-import { ProductsRepository } from "@/core/domain/repositories/ProductsRepository";
+import { ProductMapper } from "@/domain/mappers/ProductMapper";
+import { ProductsRepository } from "@/domain/repositories/ProductsRepository";
 import { SyncProductsInput } from "./SyncProductsInput";
 
 export class SyncProductsUseCase {

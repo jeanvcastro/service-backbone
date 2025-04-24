@@ -1,4 +1,4 @@
-import { OrdersRepository } from "@/core/domain/repositories/OrdersRepository";
+import { OrdersRepository } from "@/domain/repositories/OrdersRepository";
 import { vi } from "vitest";
 
 export const mockedOrdersRepository: OrdersRepository = {

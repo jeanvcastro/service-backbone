@@ -1,6 +1,6 @@
-import { Customer } from "@/core/domain/entities/Customer";
-import { CustomerMapper } from "@/core/domain/mappers/CustomerMapper";
-import { CustomersRepository } from "@/core/domain/repositories/CustomersRepository";
+import { Customer } from "@/domain/entities/Customer";
+import { CustomerMapper } from "@/domain/mappers/CustomerMapper";
+import { CustomersRepository } from "@/domain/repositories/CustomersRepository";
 import { Knex } from "knex";
 
 export default class KnexCustomersRepository implements CustomersRepository {

@@ -1,4 +1,4 @@
-import { OrderConstants } from "@/core/domain/entities/Order";
+import { OrderConstants } from "@/domain/entities/Order";
 
 export type CreateOrderInput = {
   customerUuid: string;

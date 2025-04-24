@@ -1,6 +1,6 @@
-import { BaseError } from "@/core/domain/errors";
 import { ErrorHandler, ErrorResponse } from "@/core/ErrorHandler";
 import Logger from "@/core/Logger";
+import { BaseError } from "@/domain/errors";
 import { isDevelopment } from "@/shared/env";
 import { type Response } from "express";
 import { ZodError } from "zod";

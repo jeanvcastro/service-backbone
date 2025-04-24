@@ -4,7 +4,7 @@ import { mockedProductsRepository } from "$/core/domain/repositories/mockedProdu
 import { makeMockedUnitOfWork } from "$/core/mockedUnitOfWork";
 import { makeCustomer } from "$/factories/makeCustomer";
 import { makeProduct } from "$/factories/makeProduct";
-import { Order, OrderConstants } from "@/core/domain/entities/Order";
+import { Order, OrderConstants } from "@/domain/entities/Order";
 import { beforeEach, describe, expect, it, Mock, vi } from "vitest";
 import { CreateOrderInput } from "./CreateOrderInput";
 import { CreateOrderUseCase } from "./CreateOrderUseCase";

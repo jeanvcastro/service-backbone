@@ -1,4 +1,4 @@
-import { OrderConstants } from "@/core/domain/entities/Order";
+import { OrderConstants } from "@/domain/entities/Order";
 import { z } from "zod";
 
 export const CreateOrderInputValidator = z.object({

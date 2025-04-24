@@ -1,4 +1,4 @@
-import { Order, OrderConstants, type OrderProps } from "@/core/domain/entities/Order";
+import { Order, OrderConstants, type OrderProps } from "@/domain/entities/Order";
 import { faker } from "@faker-js/faker";
 
 export const makeOrder = ({ ...override }: Partial<OrderProps> = {}): Order => {

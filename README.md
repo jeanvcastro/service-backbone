@@ -26,14 +26,16 @@ Embora inclua implementações com tecnologias como **RabbitMQ**, **Knex**, **Ex
 
 ## 📁 Project Structure
 
+A estrutura do projeto segue os princípios de **modularidade**, **alta coesão** e **separação de responsabilidades**. Cada pasta tem um papel bem definido dentro da arquitetura, refletindo os fundamentos da **Clean Architecture** na organização por **feature e responsabilidade**.
+
 ```
 src/
-├── domain/        # Regras de negócio (entidades, erros, eventos, repositórios)
-├── infra/         # Implementações (Express, Knex, RabbitMQ, Schedule, etc.)
-├── useCases/      # Package by feature: cada pasta representa um caso de uso com sua lógica, validações, controller, CLI ou handler
-├── shared/        # Núcleo compartilhado (DI, EventBus, UoW, env)
-├── tests/         # Fábricas e mocks para testes unitários
-├── dist/          # Código transpilado (web, cli, eventbus, schedule)
+├── domain/        # Regras de negócio (entidades, objetos de valor, eventos)
+├── useCases/      # Casos de uso organizados por funcionalidade
+├── infra/         # Implementações externas (HTTP, CLI, DB, EventBus, etc.)
+├── shared/        # Núcleo técnico reutilizável (DI, UoW, EventBus, etc.)
+├── tests/         # Mocks e fábricas para testes unitários
+├── dist/          # Código transpilado e empacotado para produção
 ```
 
 A pasta `useCases/` segue o padrão **package by feature**, onde cada caso de uso contém todos os arquivos necessários para funcionar de forma independente, conforme o tipo de entrada esperada:
@@ -45,22 +47,6 @@ A pasta `useCases/` segue o padrão **package by feature**, onde cada caso de us
 Cada use case pode conter tanto lógica de aplicação (como validações e DTOs) quanto uma camada de infraestrutura específica para seu canal de entrada (como controllers, comandos ou handlers), respeitando a estrutura modular e coesa.
 
 > Além dos entrypoints padrão (`web`, `cli`, `schedule`, `eventbus`), o projeto está preparado para ser estendido com novos pontos de entrada, como um `lambda`, `worker`, `graphql`, ou qualquer outro formato necessário. A arquitetura modular facilita essa expansão com mínimo esforço.
-
----
-
-## 📂 Folder Overview
-
-A estrutura do projeto segue os princípios de **modularidade, coesão e separação de responsabilidades**. Cada pasta tem um papel claro dentro da arquitetura, alinhado com os conceitos de **Clean Architecture** e **package by feature**.
-
-```
-src/
-├── domain/        # Núcleo da aplicação (regras de negócio puras)
-├── useCases/      # Casos de uso organizados por funcionalidade
-├── infra/         # Implementações externas (HTTP, CLI, DB, EventBus, etc.)
-├── shared/        # Núcleo técnico reutilizável (DI, UoW, EventBus, etc.)
-├── tests/         # Mocks e fábricas para testes unitários
-├── dist/          # Código transpilado e empacotado para produção
-```
 
 ---
 
